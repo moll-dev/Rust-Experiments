@@ -1,5 +1,7 @@
 # Rust-Experiments
 A collection of my crappy experiments in Rust.
+Feel free to clone, fork, what ever.
+
 
 ### Installation
 
