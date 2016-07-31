@@ -9,6 +9,7 @@ use piston::input::*;
 use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{ GlGraphics, OpenGL };
 use std::ops::{Add, AddAssign};
+use std::f64;
 
 pub struct App {
     gl: GlGraphics,
@@ -28,7 +29,7 @@ impl App {
         const GREEN: [f32;4] = [0.333, 0.847, 0.654, 1.0];
         const RED: [f32; 4] = [0.0823, 0.435, 0.262, 1.0];
 
-        let square = rectangle::square(0.0, 0.0, 50.0);
+        let square = rectangle::square(0.0, 0.0, 10.0);
         let rotation = self.rotation;
 
         let (x, y) = ((args.width / 2 ) as f64,
@@ -37,11 +38,16 @@ impl App {
         self.gl.draw(args.viewport(), |c, gl| {
             clear(GREEN, gl);
 
-            let transform = c.transform.trans(x, y)
-                                       .rot_rad(rotation)
-                                       .trans(-25.0+rotation, -25.0+rotation);
-
-            ellipse(RED, square, transform, gl);
+            
+            for n in 0..8{
+                let var = n as f64;
+               let float = f64::consts::PI/2.0+rotation+var;
+                let transform = c.transform.trans(50.0+var*20.0+float.sin()*5.0, y+20.0+float.sin()*30.0)
+                                           .trans(-25.0, -25.0);
+                ellipse(RED, square, transform, gl);
+            }
+            //ellipse(RED, square, transform2, gl);
+            //ellipse(RED, square, transform, gl);
         });
     }
 
@@ -49,7 +55,7 @@ impl App {
         // let mut rotation = self.rotation;
         // rotation += 0.001;
         // self.rotation = rotation;
-        self.rotation += 0.01;
+        self.rotation += 0.03;
     }
 }
 
